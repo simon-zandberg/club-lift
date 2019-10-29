@@ -31,12 +31,12 @@ ReactDOM.render(<LoadingPage />, document.getElementById("app"));
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         store.dispatch(login(user.uid));
-        //store.dispatch(startSetExpenses()).then(() => {
         renderApp();
         if (history.location.pathname === '/') {
+            // store.dispatch(startSetExpenses()).then(() => {
+            // });        
             history.push('/dashboard');
         }
-        //});        
     } else {
         store.dispatch(logout());
         renderApp();
