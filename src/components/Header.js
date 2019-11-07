@@ -9,6 +9,7 @@ export const Header = ({ startLogout }) => (
             <div className="header__content">
                 <Link className="header__title" to="/dashboard">
                     <h1>Club Lift</h1>
+                    <span className="grey-text">Give someone a lift</span>
                 </Link>
                 <button className="button button--link" onClick={startLogout}>Logout</button>
             </div>

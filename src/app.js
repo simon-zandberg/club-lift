@@ -30,13 +30,23 @@ ReactDOM.render(<LoadingPage />, document.getElementById("app"));
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-        store.dispatch(login(user.uid));
-        renderApp();
-        if (history.location.pathname === '/') {
-            // store.dispatch(startSetExpenses()).then(() => {
-            // });        
-            history.push('/dashboard');
-        }
+        store.dispatch(login(user));
+        firebase.database().ref(`users/${user.uid}`).once("value", snapshot => {
+            renderApp();
+            if (snapshot.val() === null) {
+                if (history.location.pathname === '/') {
+                    // store.dispatch(startSetExpenses()).then(() => {
+                    // });        
+                    history.push('/register');
+                }
+            } else {
+                if (history.location.pathname === '/') {
+                    // store.dispatch(startSetExpenses()).then(() => {
+                    // });        
+                    history.push('/dashboard');
+                }
+            }
+        })
     } else {
         store.dispatch(logout());
         renderApp();
