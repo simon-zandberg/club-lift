@@ -31,20 +31,13 @@ ReactDOM.render(<LoadingPage />, document.getElementById("app"));
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         store.dispatch(login(user));
+console.log(user.uid)
         firebase.database().ref(`users/${user.uid}`).once("value", snapshot => {
             renderApp();
-            if (snapshot.val() === null) {
-                if (history.location.pathname === '/') {
-                    // store.dispatch(startSetExpenses()).then(() => {
-                    // });        
-                    history.push('/register');
-                }
+            if (snapshot.val() !== null) {
+                history.push('/register');
             } else {
-                if (history.location.pathname === '/') {
-                    // store.dispatch(startSetExpenses()).then(() => {
-                    // });        
-                    history.push('/dashboard');
-                }
+                history.push('/dashboard');
             }
         })
     } else {
